@@ -15,9 +15,9 @@
 <body>
 <div id="root"></div>
 
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.28.0/babel.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -30,8 +30,9 @@
     root.innerHTML = '<div style="font-family:Arial,sans-serif;padding:30px;max-width:900px;margin:auto"><h2>Reseller Portal could not start</h2><p>' + String(message).replace(/</g, '&lt;') + '</p><p>Open F12 → Console for the full error.</p></div>';
   }
 
-  if (!window.Babel) return showFatal('Babel did not load. Check your internet connection or browser extensions.');
-  if (!window.React || !window.ReactDOM) return showFatal('React did not load.');
+  if (!window.React) return showFatal('React did not load. Try refreshing with Ctrl+F5. If it still fails, check F12 → Console for a blocked CDN request.');
+  if (!window.ReactDOM) return showFatal('ReactDOM did not load.');
+  if (!window.Babel) return showFatal('Babel did not load.');
   if (!window.firebase) return showFatal('Firebase did not load.');
 
   fetch('./app.js', { cache: 'no-store' })
@@ -44,9 +45,6 @@
         presets: ['react'],
         sourceType: 'script'
       });
-
-      // Run the compiled app in the normal browser global environment.
-      // app.js intentionally uses React/firebase globals rather than ES modules.
       var run = new Function(result.code + '\n//# sourceURL=app.js');
       run();
     })
