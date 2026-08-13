@@ -43,6 +43,18 @@
   if (!window.Babel) return showFatal('Babel did not load.');
   if (!window.firebase) return showFatal('Firebase did not load.');
 
+  // Catch errors that happen outside React's render (in useEffect, async
+  // Firestore callbacks, etc.) so a crash there shows a visible message
+  // instead of silently leaving a blank page. React's own render errors
+  // are caught separately by an in-app ErrorBoundary.
+  window.addEventListener('error', function (e) {
+    showFatal((e.error && (e.error.stack || e.error.message)) || e.message || 'Unknown error');
+  });
+  window.addEventListener('unhandledrejection', function (e) {
+    var reason = e.reason;
+    showFatal((reason && (reason.stack || reason.message)) || String(reason));
+  });
+
   // Cache-bust so a stale cached copy of app.js (browser or host CDN) can
   // never mask a real update — this is what caused "my fix didn't stick"
   // symptoms after redeploying.
