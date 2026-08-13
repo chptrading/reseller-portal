@@ -9,7 +9,7 @@ const { useState, useEffect, useRef, useContext, createContext } = React;
 //
 // After deploying the backend, replace this URL with your backend URL.
 // Example: https://your-project.vercel.app/api/gemini
-const GEMINI_API_URL = "https://YOUR-BACKEND.vercel.app/api/gemini";
+const GEMINI_API_URL = "/api/gemini";
 const GEMINI_MODEL = "gemini-3.6-flash";
 
 // Get this from Firebase Console -> Project settings -> General -> Your apps -> SDK setup and config
