@@ -2156,7 +2156,7 @@ function App() {
 
       unsubscribeFirestore = sharedDocRef.onSnapshot(
         (snap) => {
-          if (snap.exists()) {
+          if (snap.exists) {
             const remote = snap.data() || {};
             // Remove the old browser-side password/user list if it exists in legacy data.
             const { users: _legacyUsers, ...safeRemote } = remote;
